@@ -1,3 +1,4 @@
+{ pkgs, ...}:
 {
   programs.waybar = {
     enable = true;
@@ -167,6 +168,7 @@
         font-family: "FiraCode Nerd Font Mono";
         font-weight: bold;
         font-size: 14px;
+        color: #f5e0dc;
       }
 
       window#waybar {
@@ -219,13 +221,40 @@
         color: #eb6f92;
       }
 
-      #clock,
-      #battery,
-      #cpu,
-      #memory,
-      #temperature,
-      #network,
-      #pulseaudio,
+      #clock {
+        color: #e0def4;
+        padding: 0 10px;
+      }
+
+      #battery {
+        color: #f6c177;
+        padding: 0 10px;
+      }
+      #cpu {
+        color: #9ccfd8;
+        padding: 0 10px;
+      }
+
+      #memory {
+        color: #c4a7e7;
+        padding: 0 10px;
+      }
+
+      #temperatureC {
+        color: #eb6f92;
+        padding: 0 10px;
+      }
+
+      #network {
+        color: #31748f;
+        padding: 0 10px;
+      }
+
+      #pulseaudio {
+        color: #f6c177;
+        padding: 0 10px;
+      }
+
       #tray {
         padding: 0 10px;
       }
