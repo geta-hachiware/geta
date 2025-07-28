@@ -7,7 +7,7 @@
     
     shellAliases =
       let
-        flakeDir = "${config.home.homeDirectory}/.flush";
+        flakeDir = "${config.home.homeDirectory}/.geta";
       in {
       rb = "sudo nixos-rebuild switch --flake ${flakeDir}";
       upd = "nix flake update ${flakeDir}";

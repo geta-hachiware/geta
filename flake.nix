@@ -1,5 +1,5 @@
 {
-  description = "flush system flake";
+  description = "geta system flake";
 
   inputs = {
     nixpkgs = {
