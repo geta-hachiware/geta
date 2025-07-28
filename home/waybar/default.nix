@@ -6,7 +6,7 @@
       waybar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 42;
         spacing = 4;
         margin-left = 14;
         margin-right = 14;
@@ -54,8 +54,8 @@
         # Centered
         "hyprland/window" = {
           format = "{}";
-	        max-length = 25;
-          separate-outputs = false;
+	        max-length = 40;
+          separate-outputs = true;
           rewrite = {
             "" = "/ᐠ - ˕ -マ Ⳋ ⋆｡°✩♬ ♪";
           };
@@ -166,14 +166,16 @@
     style = ''
       * {
         font-family: "FiraCode Nerd Font Mono";
+        font-size: 13px;
         font-weight: bold;
-        font-size: 14px;
+        min-height: 8px;
         color: #f5e0dc;
       }
 
       window#waybar {
-        background: none;
-        border: none;
+        background: transparent;
+        margin: 0px;
+        padding: 0px;
       }
 
       #workspaces {
@@ -193,6 +195,7 @@
       }
 
       .modules-left,
+      .modules-center,
       .modules-right {
         border: 2.5px solid rgba(196, 167, 231, 0.2);
         border-radius: 12px;
@@ -201,19 +204,14 @@
         background: rgba(57, 53, 82, 0.75);
       }
 
-      .modules-center {
-        border: none;
-        background: none;
-      }
-
       #hyprland-window {
         font-weight: bold;
         color: #f6c177;
       }
 
       #custom-nixos {
-        font-size: 18px;
-        padding-left: 10px;
+        font-size: 14px;
+        padding-left: 5px;
       }
 
       #cava {
