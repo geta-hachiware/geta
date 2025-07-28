@@ -112,17 +112,16 @@
         
         shadow = {
           enabled = true;
-          range = 12;
-          render_power = 2;
+          range = 9;
+          render_power = 4;
         };
 
         blur = {
           enabled = true;
 	        xray = true;
           size = 4;
-          passes = 1;
-          vibrancy = 0.10;
-          ignore_opacity = true;
+          passes = 2;
+          vibrancy = 0.6;
 	        new_optimizations = true;
 	        popups = true;
 	        popups_ignorealpha = 0.6;
