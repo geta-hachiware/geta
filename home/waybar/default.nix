@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
 {
   programs.waybar = {
     enable = true;
@@ -7,18 +5,21 @@
       waybar = {
         layer = "top";
         position = "top";
+        height = 30;
+        spacing = 4;
+        margin-left = 14;
+        margin-right = 14;
+        margin-top = 2;
         modules-left = [ "custom/nixos" "hyprland/workspaces" ];
-        modules-center = [ "hyprland/window" ];
+        modules-center = [ "clock" "hyprland/window" ];
         modules-right = [
 	      "cava"
 	      "pulseaudio"
-	      "network"
-              "cpu"
+        "cpu"
 	      "memory"
-	      "disk"
-	      "temperature"
+        "temperature"
+        "network"
 	      "battery"
-	      "clock"
 	      "tray"
         ];
 
@@ -29,26 +30,34 @@
           tooltip-format = "btw";
         };
 
+        mpris = {
+          format = "♪ « {artist} - {title} »";
+          format-paused = "⏸ [{artist} - {title}]";
+          max-length = 50;
+        };
+
         # Workspace
         "hyprland/workspaces" = {
-          on-click = "activate";
           format = "{icon}";
           tooltip = false;
-	  show-empty = false;
+	        show-empty = false;
 
-	  format-icons = {
-	    active = "●";
+	        format-icons = {
+	          active = "●";
             visible = "●"; # visible but not focused ( e.g on other monitor )
-	    default = "○"; # has windows, not active
-	    empty = ""; # don't show at allvi
-	  };
+	          default = "○"; # has windows, not active
+	          empty = ""; # don't show at allvi
+	        };
         };
 
         # Centered
         "hyprland/window" = {
           format = "{}";
-	      max-length = 80;
-	      separate-outputs = true;
+	        max-length = 25;
+          separate-outputs = false;
+          rewrite = {
+            "" = "/ᐠ - ˕ -マ Ⳋ ⋆｡°✩♬ ♪";
+          };
         };
 
         # On screen thingy
@@ -93,31 +102,15 @@
           on-click = "pavucontrol";
         };
 
-        # Network
-        network = {
-	    format = "{icon}";
-            format-wifi = "{icon} {essid}";
-            format-ethernet = "{icon} connected";
-            tooltip-format = "{ifname} via {gwaddr}";
-            format-linked = "{icon}{ ifname} (No IP)";
-            format-disconnected = "Disconnected ⚠";
-
-	    format-icons = {
-	      wifi = "󰖩";
-	      ethernet = "󰈁";
-	      linked = "󰈂";
-	    };
-            # on-click = "sh ~/scripts/rofi-wifi-menu/rofi-wifi-menu.sh";
-        };
-
         # Cpu
         cpu = {
+            interval = 1;
             format = " {usage}%";
-            tooltip = true;
         };
 
         # Memory
-	    memory = {
+        memory = {
+          interval = 1;
           format = " {}%";
           tooltip = true;
         };
@@ -128,6 +121,16 @@
             critical-threshold = 100;
             format-critical = " {temperatureC}";
             format = " {temperatureC}°C";
+        };
+
+        # Network
+        network = {
+          format-disconnected = "󰯡 Disconnected";
+          format-ethernet = "󰒢 Connected!";
+          format-linked = "󰖪 {essid} (No IP)";
+          format-wifi = "󰖩 {essid}";
+          interval = 1;
+          tooltip = false;
         };
 
         # Battery
@@ -164,27 +167,41 @@
         font-family: "FiraCode Nerd Font Mono";
         font-weight: bold;
         font-size: 14px;
-	color: #e0def4;
       }
 
       window#waybar {
-        background: rgba(24, 23, 37, 0.8);
+        background: none;
         border: none;
+      }
+
+      #workspaces {
+        margin-left: 8px;
       }
 
       #workspaces button {
-        padding: 0 5px;
-        border: none;
+        padding: 0 3px;
+        box-shadow: none;
         background-color: transparent;
-	color: #e0def4
       }
 
       #workspaces button.active {
-        color: #9ccfd8; /*cyan */
+        box-shadow: none;
+        color: #f6c177;
+        font-weight: 900;
       }
 
-      #workspaces button:hover {
-        background: rgba(255, 255, 255, 0.5);
+      .modules-left,
+      .modules-right {
+        border: 2.5px solid rgba(196, 167, 231, 0.2);
+        border-radius: 12px;
+        margin: 4px 20px;
+        padding: 2px 5px;
+        background: rgba(57, 53, 82, 0.75);
+      }
+
+      .modules-center {
+        border: none;
+        background: none;
       }
 
       #hyprland-window {
@@ -201,26 +218,23 @@
         font-family: monospace;
         color: #eb6f92;
       }
+
       #clock,
       #battery,
       #cpu,
       #memory,
-      #disk,
       #temperature,
-      #backlight,
       #network,
       #pulseaudio,
       #tray {
-        padding: 0 8px;
+        padding: 0 10px;
       }
 
       #clock:hover,
       #battery:hover,
       #cpu:hover,
       #memory:hover,
-      #disk:hover,
       #temperature:hover,
-      #backlight:hover,
       #network:hover,
       #pulseaudio:hover,
       #tray:hover {
@@ -229,4 +243,3 @@
     '';
   };
 }
-

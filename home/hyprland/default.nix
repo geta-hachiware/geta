@@ -1,10 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
- 
+    settings = { 
       #Monitor
       monitor = [ 
       "DP-1,1920x1080@144,0x0,1"
@@ -14,14 +13,15 @@
       exec-once = [
         #"${config.home.homeDirectory}/.config/hypr/start.sh "
         "waybar"
+        "wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & wl-paste --watch cliphist store"
       ];
 
       #Env
       env = [
         # Hyprland + Wayland
         "XDG_CURRENT_DESKTOP,Hyprland"
+        "XDG_SESSION_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
-        "GDK_BACKEND,wayland,x11,*"
 
         # Electron / Discord / Browsers
         "NIXOS_OZONE_WL,1"
@@ -30,6 +30,11 @@
 
 	      # SDL for games/emulators
         "SDL_VIDEODRIVER,wayland"
+        "WLR_RENDERER,vulkan"
+        "_GL_VRR_ALLOWED,1"
+        "WLR_RENDERER_ALLOW_SOFTWARE,1"
+        "WLR_NO_HARDWARE_CURSORS,1"
+        "CLUTTER_BACKEND,wayland"
 
 	      # QT apps
         "QT_QPA_PLATFORM,wayland;xcb"
@@ -43,17 +48,13 @@
 
       #Look and Feel
       general = {
-        gaps_in = 2;
-        gaps_out = 6;
-        border_size = 2;
-
-        #Borders
+        gaps_in = 4;
+        gaps_out = 8;
         "col.active_border" = "rgba(c4a7e7ff) rgba(f6c177ff) 45deg";
         "col.inactive_border" = "rgba(393552dd)";
-
         resize_on_border = true;
+        border_size = 2;
       	layout = "dwindle";
-
 	      allow_tearing = false;
 
 	      snap = {
@@ -93,19 +94,18 @@
 
       #decoration
       decoration = {
-        rounding = 7;
-        rounding_power = 2;
-        
+        rounding = 5;
+        rounding_power = 2; 
         windowrule = [
           "opacity 1.0 override, class:^(firefox|chromium|Brave-browser|Google-chrome)"
           "suppressevent maximize, class:.*"
           "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
         ];
+
         windowrulev2 = [
 	        "opacity 1.0 override, class:^.*, fullscreen:1"
           "idleinhibit fullscreen, class:.*"
         ];
-
 
         active_opacity = 0.90;
         inactive_opacity = 0.85;
@@ -114,7 +114,6 @@
           enabled = true;
           range = 12;
           render_power = 2;
-          color = "rgba(393552dd)";
         };
 
         blur = {
@@ -123,6 +122,7 @@
           size = 4;
           passes = 1;
           vibrancy = 0.10;
+          ignore_opacity = true;
 	        new_optimizations = true;
 	        popups = true;
 	        popups_ignorealpha = 0.6;
@@ -130,23 +130,21 @@
       };
 
       #animations
-      animations = {
+            animations = {
         enabled = true;
-
         bezier = [
+          "myBezier, 0.05, 0.9, 0.1, 1.05"
           "easeOutQuint,0.23,1,0.32,1"
           "easeinoutcubic,0.65,0.05,0.36,1"
           "linear,0,0,1,1"
           "almostLinear,0.5,0.5,0.75,1.0"
           "quick,0.15,0,0.1,1"
         ];
-
         animation = [
-          "global, 1, 10, default"
-          "border, 1, 5.39, easeOutQuint"
-          "windows, 1, 4.79, easeOutQuint"
-          "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
-          "windowsOut, 1, 1.49, linear, popin 87%"
+          "windows, 1, 7, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "borderangle, 1, 8, default"
           "fadeIn, 1, 1.73, almostLinear"
           "fadeOut, 1, 1.46, almostLinear"
           "fade, 1, 3.03, quick"
@@ -199,11 +197,15 @@
       #Binds
       bind = [
         # Terminal $ App Launcher
-	      "$mainMod, D, exec, rofi -show drun -show-icons"
-        "$mainMod, Return, exec, ghostty"
+        "$mainMod, Return, exec, ghostty" #terminal
+	      "$mainMod, D, exec, rofi -show drun -show-icons" #launcher
+        "$mainMod, T, exec, [float] dolphin" #file manager
+        "$mainMod, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy" #clipboard
+        "$mainMod, Tab, exec, rofi -show" #show windows
 
-        # File Manager
-      	"$mainMod, E, exec, dolphin"
+        # Screenshot/Screencapture
+        "$mainMod, P, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture       
+        "$mainMod+Shift, S, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture 
 
         # Toggle focused window split
         "$mainMod, slash, togglesplit"
@@ -218,10 +220,6 @@
         "$mainMod, V, togglefloating"
         "$mainMod, P, pseudo"
         "$mainMod, F, fullscreen"
-
-        # Screenshot/Screencapture
-        "$mainMod, P, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture       
-        "$mainMod+Shift, S, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture 
 
         # Move/Change window focus
         "$mainMod, Left, movefocus, l"  

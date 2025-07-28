@@ -29,6 +29,7 @@
     wl-clipboard
     libreoffice-qt6-fresh
     rofi-wayland
+    pavucontrol
     inputs.nixvim.packages.${system}.default
   ];
 
