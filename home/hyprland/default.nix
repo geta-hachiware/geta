@@ -11,9 +11,11 @@
 
       #Start
       exec-once = [
-        #"${config.home.homeDirectory}/.config/hypr/start.sh "
+        "${config.home.homeDirectory}/.geta/Scripts/WallPaper.zsh"
         "waybar"
-        "wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & wl-paste --watch cliphist store"
+        "wl-paste --type text --watch cliphist store &"
+        "wl-paste --type image --watch cliphist store &"
+        "wl-paste --watch cliphist store &"
       ];
 
       #Env
@@ -199,7 +201,7 @@
         "$mainMod, Return, exec, ghostty" #terminal
 	      "$mainMod, D, exec, rofi -show drun -show-icons" #launcher
         "$mainMod, T, exec, [float] dolphin" #file manager
-        "$mainMod, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy" #clipboard
+        "$mainMod+Shift, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy" #clipboard
         "$mainMod, Tab, exec, rofi -show" #show windows
 
         # Screenshot/Screencapture

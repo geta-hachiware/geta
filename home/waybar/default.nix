@@ -27,8 +27,7 @@
         # NixOS logo
         "custom/nixos" = {
           format = "";
-          tooltip = true;
-          tooltip-format = "btw";
+          on-click = "sh -c '$HOME/.geta/Scripts/WallPaper.zsh'";
         };
 
         mpris = {
