@@ -16,6 +16,7 @@
     ./git.nix
     ./nixcord.nix
     ./spicetify.nix
+    ./rofi.nix
     inputs.nixcord.homeModules.nixcord
     inputs.spicetify-nix.homeManagerModules.spicetify
   ];
@@ -28,16 +29,24 @@
     hyprshot
     wl-clipboard
     libreoffice-qt6-fresh
-    rofi-wayland
     pavucontrol
     inputs.nixvim.packages.${system}.default
     imagemagick
     cliphist
+    playerctl
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".config/hypr/Scripts/WallPaper.zsh" = {
+      source = ../Scripts/WallPaper.zsh;
+      executable = true;
+    };
+    ".config/hypr/WallPaper" = {
+      source = ../Wallpaper;
+      recursive = true;
+    }; 
   };
 
   # Home Manager can also manage your environment variables through

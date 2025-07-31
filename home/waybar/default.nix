@@ -11,55 +11,51 @@
         margin-left = 14;
         margin-right = 14;
         margin-top = 2;
-        modules-left = [ "custom/nixos" "hyprland/workspaces" ];
+        modules-left = [ "custom/nixos" "hyprland/workspaces" "mpris" "cava" ];
         modules-center = [ "clock" "hyprland/window" ];
-        modules-right = [
-	      "cava"
-	      "pulseaudio"
-        "cpu"
-	      "memory"
-        "temperature"
-        "network"
-	      "battery"
-	      "tray"
-        ];
+        modules-right = [ "pulseaudio" "cpu" "memory" "temperature" "network" "battery" "tray" ];
 
         # NixOS logo
         "custom/nixos" = {
           format = "";
-          on-click = "sh -c '$HOME/.geta/Scripts/WallPaper.zsh'";
+          on-click = "sh -c \"$HOME/.config/hypr/Scripts/WallPaper.zsh\"";
         };
-
-        mpris = {
-          format = "♪ « {artist} - {title} »";
-          format-paused = "⏸ [{artist} - {title}]";
-          max-length = 50;
+ 
+        "mpris" = {
+          "format" = "♪ « {artist} - {title} »";
+          "format-paused" = "⏸ [{artist} - {title}]";
+          "max-length" = 50;
         };
 
         # Workspace
         "hyprland/workspaces" = {
-          format = "{icon}";
-          tooltip = false;
-	        show-empty = false;
-
-	        format-icons = {
-	          active = "●";
-            visible = "●"; # visible but not focused ( e.g on other monitor )
-	          default = "○"; # has windows, not active
-	          empty = ""; # don't show at allvi
-	        };
+          format = "{icon}"; 
+          "format-icons" = {
+            "1" = "一";
+            "2" = "二";
+            "3" = "三";
+            "4" = "四";
+            "5" = "五";
+            "6" = "六";
+            "7" = "七";
+            "8" = "八";
+            "9" = "九";
+            "10" = "十";
+            sort-by-number = false;
+          };
+          show-empty = false;
         };
 
         # Centered
         "hyprland/window" = {
           format = "{}";
-	        max-length = 40;
-          separate-outputs = true;
+	        max-length = 25;
+          separate-outputs = false;
           rewrite = {
             "" = "/ᐠ - ˕ -マ Ⳋ ⋆｡°✩♬ ♪";
           };
         };
-
+        
         # On screen thingy
         cava = {
           framerate = 240;
@@ -100,6 +96,14 @@
             ];
           };
           on-click = "pavucontrol";
+          "tooltip" = true;
+        };
+
+        # Clock
+        clock = {
+            format = "{:%H:%M}";
+            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+            format-alt = "{:%Y-%m-%d}";
         };
 
         # Cpu
@@ -126,9 +130,11 @@
         # Network
         network = {
           format-disconnected = "󰯡 Disconnected";
-          format-ethernet = "󰒢 Connected!";
+          format-ethernet = "{bandwidthUpBytes} {bandwidthDownBytes} 󰒢 Connected!";
           format-linked = "󰖪 {essid} (No IP)";
           format-wifi = "󰖩 {essid}";
+          min-width = 20;
+          fixed-width = 20;
           interval = 1;
           tooltip = false;
         };
@@ -153,11 +159,9 @@
             ];
         };
 
-        # Clock
-        clock = {
-            format = "{:%H:%M}";
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            format-alt = "{:%Y-%m-%d}";
+        "tray" = {
+          icon-size = 12;
+          spacing = 10;
         };
       };
     };
@@ -189,7 +193,7 @@
 
       #workspaces button.active {
         box-shadow: none;
-        color: #f6c177;
+        color: #e0def4;
         font-weight: 900;
       }
 
@@ -211,6 +215,15 @@
       #custom-nixos {
         font-size: 14px;
         padding-left: 5px;
+      }
+
+      #mpris {
+        padding-left: 5px;
+        padding-right: 0px;
+      }
+
+      #mpris {
+        color: #f2e9de;
       }
 
       #cava {
@@ -256,6 +269,7 @@
         padding: 0 10px;
       }
 
+      #mpris:hover,
       #clock:hover,
       #battery:hover,
       #cpu:hover,

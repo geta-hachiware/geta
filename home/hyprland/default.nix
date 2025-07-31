@@ -13,9 +13,7 @@
       exec-once = [
         "${config.home.homeDirectory}/.geta/Scripts/WallPaper.zsh"
         "waybar"
-        "wl-paste --type text --watch cliphist store &"
-        "wl-paste --type image --watch cliphist store &"
-        "wl-paste --watch cliphist store &"
+        "wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store & wl-paste --watch cliphist store"
       ];
 
       #Env
@@ -97,7 +95,8 @@
       #decoration
       decoration = {
         rounding = 5;
-        rounding_power = 2; 
+        rounding_power = 2;
+
         windowrule = [
           "opacity 1.0 override, class:^(firefox|chromium|Brave-browser|Google-chrome)"
           "suppressevent maximize, class:.*"
@@ -202,7 +201,7 @@
 	      "$mainMod, D, exec, rofi -show drun -show-icons" #launcher
         "$mainMod, T, exec, [float] dolphin" #file manager
         "$mainMod+Shift, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy" #clipboard
-        "$mainMod, Tab, exec, rofi -show" #show windows
+        "$mainMod, Tab, exec, rofi -show" #show launcher 
 
         # Screenshot/Screencapture
         "$mainMod, P, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture       
