@@ -23,6 +23,12 @@
     nixcord = {
       url = "github:kaylorben/nixcord";
     };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -33,6 +39,7 @@
       nixvim,
       spicetify-nix,
       nixcord,
+      stylix,
       ...
       }@inputs:
     let
@@ -51,6 +58,7 @@
           };
           modules = [
             ./nixos/configuration.nix
+            inputs.stylix.nixosModules.stylix
           ];
         };
       };
